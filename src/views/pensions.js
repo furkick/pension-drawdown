@@ -3,7 +3,8 @@ import { escHtml } from '../format.js';
 export function renderPensions(s) {
   return `
   <section class="bg-white rounded-xl shadow p-6 mb-4">
-    <h2 class="text-lg font-semibold text-slate-800 mb-4">Pensions</h2>
+    <h2 class="text-lg font-semibold text-slate-800 mb-4">Pension Pots</h2>
+    <p class="text-xs text-slate-400 mb-3">Drawdown is calculated automatically based on your Drawdown Strategy. 25% of each withdrawal is tax-free (adjustable below).</p>
     ${s.pensions.length === 0
       ? '<p class="text-sm text-slate-400 mb-4">No pensions added yet.</p>'
       : `<div class="overflow-x-auto">
@@ -12,7 +13,7 @@ export function renderPensions(s) {
           <tr class="border-b border-slate-200 text-xs uppercase tracking-wide text-slate-500">
             <th class="pb-2 text-left">Name</th>
             <th class="pb-2 text-right">Balance (£)</th>
-            <th class="pb-2 text-right">Annual Drawdown (£)</th>
+            <th class="pb-2 text-right">Growth Rate (%)</th>
             <th class="pb-2 text-right">Tax-Free (%)</th>
             <th class="pb-2"></th>
           </tr>
@@ -31,8 +32,8 @@ export function renderPensions(s) {
                 class="block w-full rounded border-slate-300 text-sm text-right tabular-nums focus:border-emerald-500 focus:ring-emerald-500" />
             </td>
             <td class="py-2 pr-2">
-              <input type="number" step="1" value="${Number(p.annualDrawdown) || 0}"
-                data-action="pension" data-id="${p.id}" data-field="annualDrawdown"
+              <input type="number" step="0.1" min="0" value="${Number(p.growthRate) || 5}"
+                data-action="pension" data-id="${p.id}" data-field="growthRate"
                 class="block w-full rounded border-slate-300 text-sm text-right tabular-nums focus:border-emerald-500 focus:ring-emerald-500" />
             </td>
             <td class="py-2 pr-2">

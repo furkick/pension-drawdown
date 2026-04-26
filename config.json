@@ -6,7 +6,10 @@
     "personalAllowance": 12570,
     "savingsAllowance": 6000,
     "currentAge": 62,
-    "incomeTaxRate": 0.20
+    "incomeTaxRate": 0.20,
+    "drawdownStrategy": "cash-first",
+    "fixedMonthlyPensionDrawdown": 0,
+    "pensionStartAge": 67
   },
   "accounts": [
     { "id": "1", "name": "NS&I Probate Pot",  "balance": 297154.25, "interestRate": 3.15, "isISA": false },

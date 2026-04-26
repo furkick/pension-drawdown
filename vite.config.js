@@ -1,5 +1,5 @@
 export default {
-  base: '/pension-calc/',
+  base: '/pension-drawdown/',
   build: {
     outDir: 'dist',
   },

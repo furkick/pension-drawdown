@@ -1,5 +1,15 @@
 import { GBP, escHtml } from '../format.js';
 
+export function updateAccountsSummary(accounts) {
+  const row = document.getElementById('accounts-summary-row');
+  if (!row) return;
+  const { total, blended, taxablePct } = accountSummary(accounts);
+  const cells = row.children;
+  cells[1].textContent = GBP.format(Math.round(total));
+  cells[2].textContent = `${blended.toFixed(2)}%`;
+  cells[3].innerHTML   = `${taxablePct}%<br><span class="font-normal">taxable</span>`;
+}
+
 function accountSummary(accounts) {
   const total         = accounts.reduce((s, a) => s + Number(a.balance), 0);
   const totalInterest = accounts.reduce((s, a) => s + Number(a.balance) * (Number(a.interestRate) / 100), 0);
@@ -55,7 +65,7 @@ export function renderAccounts(s) {
           </tr>`).join('')}
         </tbody>
         <tfoot>
-          <tr class="border-t-2 border-slate-300 bg-slate-50 font-semibold text-sm">
+          <tr id="accounts-summary-row" class="border-t-2 border-slate-300 bg-slate-50 font-semibold text-sm">
             <td class="py-2 text-slate-700">Total</td>
             <td class="py-2 text-right tabular-nums text-slate-800">${GBP.format(Math.round(total))}</td>
             <td class="py-2 text-right tabular-nums text-slate-600">${blended.toFixed(2)}%</td>

@@ -15,7 +15,7 @@ import { state, saveState } from './src/state.js';
 import { calcProjection }   from './src/projection.js';
 import { showToast }        from './src/toast.js';
 import { renderSettings }   from './src/views/settings.js';
-import { renderAccounts }   from './src/views/accounts.js';
+import { renderAccounts, updateAccountsSummary } from './src/views/accounts.js';
 import { renderPensions }   from './src/views/pensions.js';
 import { renderActions }    from './src/views/actions.js';
 import { renderTable }      from './src/views/table.js';
@@ -34,7 +34,6 @@ function render() {
   document.getElementById('app').innerHTML = `
     <header class="mb-6">
       <h1 class="text-2xl font-bold text-slate-900">Retirement Tax &amp; Drawdown Calculator</h1>
-      <p class="text-sm text-slate-500 mt-1">All data is stored locally in your browser — nothing is sent to any server.</p>
     </header>
     ${renderSettings(state)}
     ${renderAccounts(state)}
@@ -80,6 +79,7 @@ function updateAccount(id, field, value) {
   else                       acc[field] = parseFloat(value) || 0;
   saveState(state);
   const rows = calcProjection(state);
+  updateAccountsSummary(state.accounts);
   renderTableInPlace(rows);
   mountCharts(rows);
 }
@@ -89,7 +89,7 @@ function updateAccount(id, field, value) {
 // ---------------------------------------------------------------------------
 
 function addPension() {
-  state.pensions.push({ id: crypto.randomUUID(), name: '', balance: 0, annualDrawdown: 0, taxFreePercentage: 25 });
+  state.pensions.push({ id: crypto.randomUUID(), name: '', balance: 0, growthRate: 5, taxFreePercentage: 25 });
   saveState(state);
   render();
 }
@@ -116,10 +116,18 @@ function updatePension(id, field, value) {
 // ---------------------------------------------------------------------------
 
 function updateSetting(key, rawValue) {
-  state.settings[key] = key === 'incomeTaxRate'
-    ? parseFloat(rawValue) / 100 || 0
-    : parseFloat(rawValue) || 0;
+  if (key === 'incomeTaxRate') {
+    state.settings[key] = parseFloat(rawValue) / 100 || 0;
+  } else if (key === 'drawdownStrategy') {
+    state.settings[key] = rawValue;
+  } else {
+    state.settings[key] = parseFloat(rawValue) || 0;
+  }
   saveState(state);
+  if (key === 'drawdownStrategy') {
+    render();
+    return;
+  }
   const rows = calcProjection(state);
   renderTableInPlace(rows);
   mountCharts(rows);
