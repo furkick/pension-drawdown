@@ -68,7 +68,7 @@ export function calcProjection(s) {
         if (p.balance <= 0) return p;
         const share      = (p.balance / totalPensionAvail) * pensionDrawdownTarget;
         const drawn      = Math.min(p.balance, share);
-        const taxFreeAmt = drawn * ((Number(p.taxFreePercentage) || 25) / 100);
+        const taxFreeAmt = drawn * ((p.taxFreePercentage ?? 25) / 100);
         pensionDrawdown += drawn;
         pensionTaxable  += drawn - taxFreeAmt;
         return { ...p, balance: p.balance - drawn };
