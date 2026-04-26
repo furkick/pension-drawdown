@@ -1,0 +1,17 @@
+{
+  "settings": {
+    "monthlyOutgoings": 1800,
+    "annualStatePension": 12548,
+    "statePensionStartAge": 67,
+    "personalAllowance": 12570,
+    "savingsAllowance": 6000,
+    "currentAge": 62,
+    "incomeTaxRate": 0.20
+  },
+  "accounts": [
+    { "id": "1", "name": "NS&I Probate Pot",  "balance": 297154.25, "interestRate": 3.15, "isISA": false },
+    { "id": "2", "name": "Standard Savings",  "balance": 71000,     "interestRate": 1.15, "isISA": false },
+    { "id": "3", "name": "Trading 212 ISA",   "balance": 14918.12,  "interestRate": 4.17, "isISA": true  }
+  ],
+  "pensions": []
+}
