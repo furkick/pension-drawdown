@@ -126,6 +126,8 @@ export function calcProjection(s) {
       openingPension,
       openingBalance: openingCash + openingPension,
       totalInterest,
+      totalCashInterest,
+      totalPensionGrowth,
       taxableInterest,
       statePension,
       pensionDrawdown,
