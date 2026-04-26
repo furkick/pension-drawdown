@@ -10,7 +10,6 @@ function rowClass(row, s) {
   return '';
 }
 
-  'Cash Opening', 'Pension Opening',
 function td(content, extraClass) {
   return '<td class="px-3 py-1.5 text-right tabular-nums ' + (extraClass || '') + '">' + content + '</td>';
 }
